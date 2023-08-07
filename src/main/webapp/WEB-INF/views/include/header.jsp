@@ -7,11 +7,11 @@
     <div class="container">
       <nav class="top-navigation">
         <ul class="top-nav-menu">
-          <li><a href="./member/login.jsp">로그인/회원가입</a></li>
-          <li><a href="./notice/notice.jsp">공지사항</a></li>
+          <li><a href="/login.do">로그인/회원가입</a></li>
+          <li><a href="/notice/list.do">공지사항</a></li>
           <li><a href="./point/point.jsp">포인트</a></li>
           <li><a href="./Shipping_Information/shipping_Information.jsp">주문조회</a></li>
-          <li><a href="./member/member_Registration.jsp">회원가입</a></li>
+          <li><a href="/enroll.do">회원가입</a></li>
         </ul>
     </nav>
       <div class="input-group">
