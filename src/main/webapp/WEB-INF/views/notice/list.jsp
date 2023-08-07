@@ -61,21 +61,13 @@
 					<td>${notice.noticeDate }</td>
 					<td>${notice.viewCount}</td>
 				</tr>
-			</c:forEach>
-		<c:if test="${totalPageCount > 1}">
-    <div class="pagination">
-        <c:forEach var="pageNumber" begin="${startPage}" end="${endPage}">
-            <c:choose>
-                <c:when test="${pageNumber == currentPage}">
-                    <strong>${pageNumber}</strong>
-                </c:when>
-                <c:otherwise>
-                    <a href="?currentPage=${pageNumber}">${pageNumber}</a>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-    </div>
-</c:if>			
+							</c:forEach>
+				
+			<tr>
+					<td colspan="5" align="center">
+					${pageNavi }
+					</td>
+				</tr>
 		</tbody>
 	</table>
 

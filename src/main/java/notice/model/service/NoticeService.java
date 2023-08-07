@@ -27,11 +27,14 @@ if(result>0) {
 session.close();
 return result;
 }
-public List<Notice> selectNoticeList(int currentPage) {
+public PageData selectNoticeList(int currentPage) {
 SqlSession session = SqlSessionTemplate.getSqlSession();
 List<Notice> nList  = nDao.selectNotice(session,currentPage);
+String pageNavi = nDao.generatePageNavi(currentPage);
+PageData pd = new PageData(nList,pageNavi);
+
 session.close();
-return nList;
+return pd;
 }
 public int updateList(Notice notice) {
 SqlSession session = SqlSessionTemplate.getSqlSession();
