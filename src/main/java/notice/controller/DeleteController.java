@@ -29,12 +29,9 @@ public class DeleteController extends HttpServlet {
 		 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 		 */
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			//DELETE FROM NOTICE_TBL WHERE NOTICE_NO=?
-			request.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
+			String noticeNo = request.getParameter("noticeNo");
 			NoticeService service = new NoticeService();
-			int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-			int result = service.deleteNoticeByNo(noticeNo);
+			int result = service.deletenotice(noticeNo);
 			if(result>0) {
 				//성공하면 공지사항 목록
 				response.sendRedirect("/notice/list.do");

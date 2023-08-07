@@ -37,7 +37,7 @@ public class Detail extends HttpServlet {
 				Integer.parseInt(request.getParameter("noticeNo"));
 				
 		NoticeService service = new NoticeService();
-		Notice notice = service.selectOneByNo(noticeNo);
+		Notice notice = service.detatilNotice(noticeNo);
 		if(notice!=null) {
 			//상세 페이지 이동
 			request.setAttribute("notice", notice);

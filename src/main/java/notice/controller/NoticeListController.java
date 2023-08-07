@@ -34,15 +34,21 @@ public class NoticeListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		NoticeService service = new NoticeService();
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		int currentPage = 1;
-		PageData pd = service.selectNoticeList(currentPage);
-		List<Notice> nList = pd.getnList();
-		request.setAttribute("nList", nList);
-		request.setAttribute("pageNavi", pd.getPageNavi());
-		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/notice/list.jsp");
-		view.forward(request, response);
+		String page = request.getParameter("currentPage")!=null?request.getParameter("currentPage"):"1";
+		int currentPage = Integer.parseInt(page);
+		List<Notice> nList = service.selectNoticeList(currentPage);
+		if(!nList.isEmpty()) {
+			
+			request.setAttribute("nList", nList);
+			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/notice/list.jsp");
+			view.forward(request, response);
+		}else {
+			request.setAttribute("msg","실패");
+			request.setAttribute("url","/index.jsp");
+			request.getRequestDispatcher("/WEB-INF/views/common/errorPage.jsp");
+		}
+		
+		
 	}
 
 	/**

@@ -29,14 +29,19 @@ public class NoticeModifyController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		NoticeService service =new NoticeService();
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-		Notice notice = service.selectOneByNo(noticeNo);
-		request.setAttribute("notice", notice);
-		request.getRequestDispatcher("/WEB-INF/views/notice/modify.jsp").forward(request, response);
-		
+		NoticeService service = new NoticeService();
+
+		Notice notice =service.detatilNotice(noticeNo);
+		if(notice!=null) {
+			request.setAttribute("notice", notice);
+			request.getRequestDispatcher("/WEB-INF/views/notice/modify.jsp").forward(request, response);;
+		}
+		else {
+			request.setAttribute("msg", "실패");
+			request.setAttribute("url", "/WEB-INF/views/notice/detail.jsp");
+			request.getRequestDispatcher("/WEB-INF/views/commmon/erorrpage.jsp").forward(request, response);
+		}
 	}
 
 	/**
@@ -44,21 +49,21 @@ public class NoticeModifyController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		request.setCharacterEncoding("UTF-8");
-		NoticeService service =new NoticeService();
-		String noticeSubject = request.getParameter("noticeSubject");
-		String noticeContent = request.getParameter("noticeContent"); 
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		String noticeSubject = request.getParameter("noticeSubject");
+		String noticeContent = request.getParameter("noticeContent");
 		Notice notice = new Notice(noticeNo,noticeSubject, noticeContent);
-		//notice.setNoticeNo(noticeNo);
-		//update NOTICE_TBL set NOTICE_SUBJECT=? , NOTICE_CONTENT =? where NOTICE_NO = ?
-		int result = service.updateNotice(notice);
+		NoticeService service = new NoticeService();
+		int result = service.updateList(notice);
 		if(result>0) {
-			request.getRequestDispatcher("/notice/list.do").forward(request, response);
+			response.sendRedirect("/notice/detail.do?noticeNo="+noticeNo);
 		}else {
-			request.getRequestDispatcher("/WEB-INF/views/notice/modify.jsp").forward(request, response);
+			request.setAttribute("msg", "수정에 실패 했습니다.");
+			request.setAttribute("url", "/notice/update.do?noticeNo"+noticeNo);
+
+			request.getRequestDispatcher("/WEB-INF/views/common/errorpage.jsp").forward(request, response);
 		}
 	}
+
 
 }

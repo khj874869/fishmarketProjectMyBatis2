@@ -32,20 +32,17 @@ public class DeleteController extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		
 		MemberService service = new MemberService();
-		String memberId = request.getParameter("member-id");
-		int result = service.deleteMember(memberId);
-		if(result > 0) {
-			
-			request.setAttribute("url", "/WEB-INF/views/member/logout.do");
-			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/member/login.jsp");
-			view.forward(request, response); 
-			
-		}else {
-			// 실패
-			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/member/myInfo.jsp");
-			view.forward(request, response); 
+		String memberId = request.getParameter("memberId");
+		int result = service.deleteMemeber(memberId);
+		if(result>0) {
+			response.sendRedirect("/member/logout.do");
 		}
-		
+		else {
+			request.setAttribute("msg", "회원탈퇴 실패");
+			request.setAttribute("url","/index.jsp");
+			request.getRequestDispatcher("/WEB-INF/views/common/errorpage.jsp").forward(request, response);
+		}
+	
 	}
 
 	/**

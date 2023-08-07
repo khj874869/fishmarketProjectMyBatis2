@@ -45,7 +45,7 @@ public class InsertController extends HttpServlet {
 		String noticeSubject = request.getParameter("noticeSubject");
 		String noticeContent = request.getParameter("noticeContent");
 		Notice notice = new Notice(noticeSubject, noticeContent);
-		int result = service.inserNotice(notice);
+		int result = service.insertNotice(notice);
 		if(result>0) {
 			response.sendRedirect("/notice/list.do");
 		}else {
