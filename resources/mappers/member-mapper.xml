@@ -25,7 +25,7 @@
 <result column="UPDATE_DATE" property="updateDate"/>
 
 </resultMap>
-<insert id="insertMember">INSERT INTO FISHWEBVALUES(#{memberId },#{memberPw },#{memberName},#{memberAge},#{memberEmail},#{memberPhone},#{memberAddress},DEFAULT,DEFAULT) </insert>
+<insert id="insertMember">INSERT INTO FISHWEB VALUES(#{memberId },#{memberPw },#{memberName},#{memberAge},#{memberEmail},#{memberPhone},#{memberAddress},DEFAULT,DEFAULT) </insert>
 
 <delete id="deleteMember">DELETE FROM FISHWEB WHERE USER_ID= #{memberId} </delete>
 
