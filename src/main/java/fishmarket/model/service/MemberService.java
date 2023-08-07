@@ -2,88 +2,68 @@ package fishmarket.model.service;
 
 import java.sql.*;
 
+import org.apache.ibatis.session.SqlSession;
+
 import common.JDBCTemplate;
+import common.SqlSessionTemplate;
 import fishmarket.model.dao.MemberDAO;
 import fishmarket.model.vo.Member;
 
 public class MemberService {
 
-	private JDBCTemplate jdbcTemplate;
 	private MemberDAO mDao;
-	
 	public MemberService() {
-//		jdbcTemplate = new JDBCTemplate();
-		jdbcTemplate = JDBCTemplate.getInstance();
 		mDao = new MemberDAO();
 	}
-	// 연결생성
-	// DAO 호출
-	// 커밋/롤백
-	
 	public int insertMember(Member member) {
-		// 연결생성
-		Connection conn = jdbcTemplate.createConnection();
-		// DAO 호출
-		int result = mDao.insertMember(conn, member);
-		// 커밋/롤백
-		if(result > 0) {
-			// 성공 - 커밋
-			jdbcTemplate.commit(conn);
-		}else {
-			// 실패 - 롤백
-			jdbcTemplate.rollback(conn);
+		SqlSession session = SqlSessionTemplate.getSqlSession();
+		int result = mDao.insertMember(session,member);
+		if(result>0) {
+			session.commit();
 		}
-		jdbcTemplate.close(conn);
+		else {
+			session.rollback();
+		}
+		session.close();
 		return result;
 	}
+	public int deleteMemeber(String memberId) {
+		SqlSession session = SqlSessionTemplate.getSqlSession();
+		int result = mDao.deleteMemeber(session,memberId);
+		if(result>0) {
+			session.commit();
+		}
+		else {
+			session.rollback();
+		}
+		session.close();
+		return result;
 
+}
 	public int updateMember(Member member) {
-		// 연결생성
-		Connection conn = jdbcTemplate.createConnection();
-		// DAO 호출
-		int result = mDao.updateMember(conn, member);
-		// 커밋/롤백
-		if(result > 0) {
-			// 성공 - 커밋
-			jdbcTemplate.commit(conn);
-		}else {
-			// 실패 - 롤백
-			jdbcTemplate.rollback(conn);
+		SqlSession session = SqlSessionTemplate.getSqlSession();
+		int result = mDao.updateMember(session,member);
+		if(result>0) {
+			session.commit();
 		}
-		jdbcTemplate.close(conn);
-		return result;
-	}
-
-	public int deleteMember(String memberId) {
-	
-		Connection conn = jdbcTemplate.createConnection();
-		int result = mDao.deleteMember(conn, memberId);
-		if(result > 0) {
-			jdbcTemplate.commit(conn);
-		}else {
-			jdbcTemplate.rollback(conn);
+		else {
+			session.rollback();
 		}
-		jdbcTemplate.close(conn);
+		session.close();
 		return result;
-	}
 
+	}
 	public Member selectCheckLogin(Member member) {
-		// TODO Auto-generated method stub
-		// 연결생성
-		Connection conn = jdbcTemplate.createConnection();
-		// DAO 호출(연결도 넘겨줘야 함)
-		Member mOne = mDao.selectCheckLogin(conn, member);
-		jdbcTemplate.close(conn);
+		SqlSession session =SqlSessionTemplate.getSqlSession();
+		Member mOne = mDao.selectChecklogin(session,member);
+		session.close();
 		return mOne;
 	}
-
 	public Member selectOneById(String memberId) {
-		Connection conn = jdbcTemplate.createConnection();
-		Member member = mDao.selectOneById(conn, memberId);
-		jdbcTemplate.close(conn);
+		SqlSession session = SqlSessionTemplate.getSqlSession();
+		Member member = mDao.mDaoselectOneById(session,memberId);
+		session.close();
 		return member;
 	}
-
-	
 }
 
