@@ -15,20 +15,20 @@
   
   </resultMap>
   <insert id="insertnotice" >
-  		INSERT INTO NOTICE_TBL
-  		VALUES(SEQ_NOTICENO.NEXTVAL,#{noticeSubject},#{noticeContent},'admin',DEFAULT,DEFAULT,DEFAULT)
+  		INSERT INTO NOTICE
+  		VALUES(SEQ_NOTICE.NEXTVAL,#{noticeSubject},#{noticeContent},'admin',DEFAULT,DEFAULT,DEFAULT)
   	</insert>
   	
 	<select id="selectnotice" resultMap="NoticeResultMap">
-	SELECT * FROM NOTICE_TBL ORDER BY NOTICE_NO DESC
+	SELECT * FROM NOTICE ORDER BY NOTICE_NO DESC
 	</select>
   	<update id="noticeUpdate">
-  	UPDATE NOTICE_TBL SET NOTICE_SUBJECT =#{noticeSubject},NOTICE_CONTENT =#{noticeContent} WHERE NOTICE_NO=#{noticeNo} 
+  	UPDATE NOTICE SET NOTICE_SUBJECT =#{noticeSubject},NOTICE_CONTENT =#{noticeContent} WHERE NOTICE_NO=#{noticeNo} 
   	</update>
   	<delete id="noticeDelete">
-  	DELETE  FROM NOTICE_TBL WHERE NOTICE_NO = #{noticeNo} 
+  	DELETE  FROM NOTICE WHERE NOTICE_NO = #{noticeNo} 
   	</delete>
   	<select id="selectOneByNo" resultMap="NoticeResultMap">
-  	SELECT * FROM NOTICE_TBL WHERE NOTICE_NO = #{noticeNo}
+  	SELECT * FROM NOTICE WHERE NOTICE_NO = #{noticeNo}
   	</select>
   </mapper>

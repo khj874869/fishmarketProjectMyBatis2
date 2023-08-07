@@ -8,8 +8,17 @@ public class Notice {
 	private String noticeContent;
 	private String noticeWriter;
 	private Timestamp noticeDate;
+	private Timestamp updateDate;
 	private int viewCount;
 	
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
+	}
+
 	public Notice() {}
 	
 	public Notice(int noticeNo, String noticeSubject, String noticeContent) {
