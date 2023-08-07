@@ -3,66 +3,71 @@ package notice.model.service;
 import java.sql.Connection;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import common.JDBCTemplate;
+import common.SqlSessionTemplate;
 import notice.model.dao.NoticeDAO;
 import notice.model.vo.Notice;
 import notice.model.vo.PageData;
 
 public class NoticeService {
-	private NoticeDAO nDao;
-	private JDBCTemplate jdbctemplate;
+	NoticeDAO nDao ;
 	public NoticeService() {
 		nDao = new NoticeDAO();
-		jdbctemplate = JDBCTemplate.getInstance();
-	}
-	public int inserNotice(Notice notice) {
-		Connection conn = jdbctemplate.createConnection(); 
-		int result = nDao.insertNotice(conn,notice);
-		if(result>0) {
-			jdbctemplate.commit(conn);
-		}
-		else {
-			jdbctemplate.rollback(conn);
-		}
-		jdbctemplate.close(conn);
-		return result;
-	}
-	public PageData selectNoticeList(int currentPage) {
-		Connection conn = jdbctemplate.createConnection();
-		List<Notice> nList = nDao.selectNoticeList(conn,currentPage);
-		String pageNavi = nDao.generatePageNavi(currentPage);
-		PageData page = new PageData(nList,pageNavi);
-		return page;
-	}
-	public Notice selectOneByNo(int noticeNo) {
-		Connection conn=jdbctemplate.createConnection();
-		Notice notice = nDao.selectOneByNo(conn,noticeNo);
-		jdbctemplate.close(conn);
-		return notice;
-	}
-	public int updateNotice(Notice notice) {
-		Connection conn = jdbctemplate.createConnection();
-		int result = nDao.updatenotice(conn,notice);
-		if(result>0) {
-			jdbctemplate.commit(conn);
-		}
-		else {
-			jdbctemplate.rollback(conn);
-		}
-		jdbctemplate.close(conn);
-		return result;	
-		}
-	public int deleteNoticeByNo(int noticeNo) {
-		Connection conn = jdbctemplate.createConnection();
-		int result = nDao.deleteNotice(conn,noticeNo);
-		if(result>0) {
-			jdbctemplate.commit(conn);
-		}
-		else {
-			jdbctemplate.rollback(conn);
-		}
-		jdbctemplate.close(conn);
-		return result;	
-		}
+	};
+public int insertNotice(Notice notice) {
+SqlSession session = SqlSessionTemplate.getSqlSession();
+int result = nDao.insertNotice(session,notice);
+if(result>0) {
+	session.commit();
+}else {
+	session.rollback();
+}
+session.close();
+return result;
+}
+public List<Notice> selectNoticeList(int currentPage) {
+SqlSession session = SqlSessionTemplate.getSqlSession();
+List<Notice> nList  = nDao.selectNotice(session,currentPage);
+session.close();
+return nList;
+}
+public int updateList(Notice notice) {
+SqlSession session = SqlSessionTemplate.getSqlSession();
+ int result = nDao.updateList(session,notice);
+if(result>0) {
+	session.commit();
+}else {
+	session.rollback();
+}
+session.close();
+
+return result;
+}
+public int deletenotice(String noticeNo) {
+SqlSession session = SqlSessionTemplate.getSqlSession();
+int result = nDao.deleteNotice(session,noticeNo);
+if(result>0) {
+	session.commit();
+}
+else {
+	session.rollback();
+}
+session.close();
+return result;
+}
+public Notice detatilNotice(int noticeNo) {
+SqlSession session = SqlSessionTemplate.getSqlSession();
+Notice notice = nDao.selectOneByNo(session,noticeNo);
+if(notice!=null) {
+	session.commit();
+}else {
+	session.rollback();
+}
+session.close();
+
+return notice;
+}
 
 }
