@@ -1,1 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration SYSTEM "http://mybatis.org/dtd/mybatis-3-config.dtd" PUBLIC "-//mybatis.org//DTD Config 3.0//EN">
+
+-<configuration>
+
+
+-<environments default="development">
+
+
+-<environment id="development">
+
+<transactionManager type="JDBC"/>
+
+
+-<dataSource type="POOLED">
+
+<property value="oracle.jdbc.driver.OracleDriver" name="driver"/>
+
+<property value="jdbc:oracle:thin:@127.0.0.1:1521:XE" name="url"/>
+
+<property value="MEMBERWEB" name="username"/>
+
+<property value="MEMBERWEB" name="password"/>
+
+</dataSource>
+
+</environment>
+
+</environments>
+
+
+-<mappers>
+
+<mapper resource="/mappers/member-mapper.xml"/>
+
+<mapper resource="/mappers/notice-mapper.xml"/>
+
+</mappers>
+
+</configuration>
