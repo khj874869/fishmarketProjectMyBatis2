@@ -92,7 +92,7 @@
 			</fieldset>
 			
 			<div>
-				<button type="submit"><a href ="/update.do?member-id=${member.memberId }">수정하기</a></button>
+				<a href ="/update.do?member-id=${member.memberId }"><button type="submit">수정하기</button></a>
 				<a href="javascript:void(0)" onclick="checkDelete();"><button type="submit">탈퇴하기</button></a>
 	<!-- 			<button>탈퇴하기</button> -->
 			</div>
@@ -101,7 +101,7 @@
 			function checkDelete() {
 				const memberId = '${sessionScope.memberId }';
 				if(confirm("탈퇴하시겠습니까?")) {
-					location.href = "/delete.do?memberId="+memberId;
+					location.href = "/delete.do?memberId="+${member.memberId };
 				}
 			}
 		

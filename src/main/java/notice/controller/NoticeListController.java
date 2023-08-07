@@ -36,7 +36,7 @@ public class NoticeListController extends HttpServlet {
 		NoticeService service = new NoticeService();
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		int currentPage = 1;
 		PageData pd = service.selectNoticeList(currentPage);
 		List<Notice> nList = pd.getnList();
 		request.setAttribute("nList", nList);
